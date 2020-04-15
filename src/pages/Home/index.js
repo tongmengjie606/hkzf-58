@@ -7,11 +7,17 @@ import NoMatch from '../NoMatch';
 import { Route, Switch } from 'react-router-dom';
 import { TabBar } from 'antd-mobile';
 import './index.scss';
+const data = [
+  { title: '首页', icon: 'iconfont icon-ind', selected: '/home' },
+  { title: '找房', icon: 'iconfont icon-findHouse', selected: '/home/house' },
+  { title: '资讯', icon: 'iconfont icon-infom', selected: '/home/news' },
+  { title: '我的', icon: 'iconfont icon-my', selected: '/home/profile' }
+];
 class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedTab: 'blueTab'
+      selectedTab: this.props.location.pathname
     };
   }
   render() {
@@ -30,58 +36,22 @@ class Home extends React.Component {
             tintColor="red"
             barTintColor="white"
           >
-            <TabBar.Item
-              title="首页"
-              key="首页"
-              icon={<span className="iconfont icon-ind"></span>}
-              selectedIcon={<span className="iconfont icon-ind"></span>}
-              selected={this.state.selectedTab === 'blueTab'}
-              onPress={() => {
-                this.setState({
-                  selectedTab: 'blueTab'
-                });
-                this.props.history.push('/home');
-              }}
-            ></TabBar.Item>
-            <TabBar.Item
-              icon={<span className="iconfont icon-findHouse"></span>}
-              selectedIcon={<span className="iconfont icon-findHouse"></span>}
-              title="找房"
-              key="找房"
-              selected={this.state.selectedTab === 'redTab'}
-              onPress={() => {
-                this.setState({
-                  selectedTab: 'redTab'
-                });
-                this.props.history.push('/home/house');
-              }}
-            ></TabBar.Item>
-            <TabBar.Item
-              icon={<span className="iconfont icon-infom"></span>}
-              selectedIcon={<span className="iconfont icon-infom"></span>}
-              title="资讯"
-              key="资讯"
-              selected={this.state.selectedTab === 'greenTab'}
-              onPress={() => {
-                this.setState({
-                  selectedTab: 'greenTab'
-                });
-                this.props.history.push('/home/news');
-              }}
-            ></TabBar.Item>
-            <TabBar.Item
-              icon={<span className="iconfont icon-my"></span>}
-              selectedIcon={<span className="iconfont icon-my"></span>}
-              title="我的"
-              key="我的"
-              selected={this.state.selectedTab === 'yellowTab'}
-              onPress={() => {
-                this.setState({
-                  selectedTab: 'yellowTab'
-                });
-                this.props.history.push('/home/profile');
-              }}
-            ></TabBar.Item>
+            {data.map(item => (
+              <TabBar.Item
+                title={item.title}
+                key={item.title}
+                icon={<span className={item.icon}></span>}
+                selectedIcon={<span className={item.icon}></span>}
+                selected={this.state.selectedTab === item.selected}
+                onPress={() => {
+                  this.setState({
+                    selectedTab: item.selected
+                  });
+                  this.props.history.push(item.selected);
+                  console.log(this.props);
+                }}
+              ></TabBar.Item>
+            ))}
           </TabBar>
         </div>
       </div>
